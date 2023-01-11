@@ -1,0 +1,139 @@
+body {
+    background-color: rgb(248, 248, 248);
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    text-align: center;
+}
+
+th,
+td {
+    width: 12%;
+    border: 1px solid black;
+}
+
+tr {
+    height: 100px;
+    border: 1px solid black;
+}
+
+thead tr {
+    height: 100%;
+    line-height: 50px !important;
+    background-color: rgb(142, 248, 169);
+}
+
+.otherDay {
+    font-weight: 100;
+    font-style: italic;
+}
+
+#createEvent {
+    border: 1px solid black;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    position: fixed;
+    left: 20%;
+    top: 20%;
+    background-color: white;
+    z-index: 100;
+    margin-bottom: 5px;
+}
+
+#closeCreateBtn {
+    float: right;
+    background-color: red;
+    border-radius: 5px;
+    border: 1px solid rgb(99, 99, 99);
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+#closeEventBtn {
+    float: right;
+    background-color: red;
+    border-radius: 5px;
+    border: 1px solid rgb(99, 99, 99);
+    padding: 2px 5px;
+}
+
+.createEl {
+    margin: 20px;
+}
+
+.events {
+    cursor: pointer;
+}
+
+.events:hover {
+    background-color: rgb(248, 232, 142);
+}
+
+.events:not(hover) {
+    /* background-color: seashell; */
+    border: 1px solid darkgrey;
+}
+
+.eventTime {
+    display: inline;
+    font-style: italic;
+    color: rgb(44, 44, 44);
+    /* margin-left:3%; */
+}
+
+.eventTitle {
+    display: inline;
+    color: rgb(21, 84, 92);
+    font-size: small;
+}
+
+#eventPopUp {
+    height: auto;
+    width: auto;
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid black;
+    z-index: 100;
+    color: black;
+    padding: 20px;
+}
+
+#popHeading {
+    /* font-size: medium; */
+    padding-left: auto;
+    padding-right: auto;
+    padding-top: 10px;
+    margin-top: 10px;
+    color: darkblue;
+    margin-bottom: 0px;
+}
+
+#popDetails {
+    margin-top: 0px;
+    padding-right: auto;
+    padding-left: auto;
+    padding-top: 10px;
+    padding-bottom: 10;
+    font-size: small;
+}
+
+h2 {
+    display: inline-block;
+}
+
+input {
+    height: 25px;
+    border: 1px solid rgba(0, 0, 17, 0.363);
+}
+
+#calendarTable {
+    overflow: hidden;
+}
