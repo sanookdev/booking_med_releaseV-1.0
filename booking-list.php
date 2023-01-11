@@ -316,6 +316,17 @@
 
         $('#for').on('change', function() {
             // console.log($('#building_name option:selected').text())
+
+            $('#building_name').html('');
+            $('#class_no').html('');
+            $('#class_no').prop('disabled', true);
+
+            $('#name_room').html('');
+            $('#name_room').prop('disabled', true);
+            $('#start_date').val('');
+            $('#end_date').val('');
+            $('#start_date').prop('disabled', true);
+            $('#end_date').prop('disabled', true);
             if ($(this).val() != '') {
                 $('#building_name').prop('disabled', false);
             } else {
@@ -341,6 +352,12 @@
         })
 
         $('#building_name').on('change', function() {
+            $('#name_room').html('');
+            $('#name_room').prop('disabled', true);
+            $('#start_date').val('');
+            $('#end_date').val('');
+            $('#start_date').prop('disabled', true);
+            $('#end_date').prop('disabled', true);
             if ($(this).val() != '') {
                 $('#class_no').prop('disabled', false);
             } else {
@@ -433,6 +450,9 @@
             return newDateTime;
         }
         // เวลา เริ่ม - สิ้นสุด
+        $('[name = start_date]').on('change', function() {
+            $('[name = end_date]').val('');
+        })
         $('[name = end_date]').on('change', function() {
 
             begin = convertDateFormat($('[name = start_date]').val());
