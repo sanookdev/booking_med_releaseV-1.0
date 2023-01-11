@@ -4,6 +4,9 @@ My Project Developed Booking Room Meeting System For Faculty Of Medicine , Thamm
 
 "I Don't use Framwork This Project"
 
+Requirments For Setup Projet
+- PHP Version > 7.4
+
 Main Js Libary i using
 - bootstrap material datetimepicker
 - calendar
