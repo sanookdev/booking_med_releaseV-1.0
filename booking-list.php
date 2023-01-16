@@ -28,9 +28,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 
-    <link rel="stylesheet" href="./css/bootstrap-material-datetimepicker.css" />
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="./css/bootstrap-material-datetimepicker.css" /> -->
+    <link rel="stylesheet" href="./css/jquery.datetimepicker.css" />
+    <!-- <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 
     <link rel="stylesheet" href="css/style.css">
     <title>จองห้องประชุม</title>
@@ -191,8 +192,11 @@
 
 
 
-    <script type="text/javascript" src="http://momentjs.com/downloads/moment-with-locales.min.js"></script>
-    <script type="text/javascript" src="./js/bootstrap-material-datetimepicker.js"></script>
+    <!-- <script type="text/javascript" src="https://momentjs.com/downloads/moment-with-locales.min.js"></script> -->
+    <!-- <script type="text/javascript" src="./js/bootstrap-material-datetimepicker.js"></script> -->
+    <script type="text/javascript" src="./js/php-date-formatter.js"></script>
+
+    <script type="text/javascript" src="./js/jquery.datetimepicker.js"></script>
 
 
     <!-- ******************************************* JS ********************************************* -->
@@ -323,8 +327,10 @@
 
             $('#name_room').html('');
             $('#name_room').prop('disabled', true);
+            $('#booking_date').val('');
             $('#start_date').val('');
             $('#end_date').val('');
+            $('#booking_date').prop('disabled', true);
             $('#start_date').prop('disabled', true);
             $('#end_date').prop('disabled', true);
             if ($(this).val() != '') {
@@ -354,9 +360,11 @@
         $('#building_name').on('change', function() {
             $('#name_room').html('');
             $('#name_room').prop('disabled', true);
+            $('#booking_date').val('');
+            $('#booking_date').prop('disabled', true);
             $('#start_date').val('');
-            $('#end_date').val('');
             $('#start_date').prop('disabled', true);
+            $('#end_date').val('');
             $('#end_date').prop('disabled', true);
             if ($(this).val() != '') {
                 $('#class_no').prop('disabled', false);
@@ -416,12 +424,20 @@
                                 "' value='" + data[i]['id'] + "'>";
                             option += data[i]['name'];
                             option += "</option>";
-                            $('#start_date').prop('disabled', false);
-                            $('#end_date').prop('disabled', false);
+                            $('#booking_date').prop('disabled', false);
+                            $('#booking_date').val('');
+                            $('#start_date').val('');
+                            $('#end_date').val('');
+                            $('#start_date').prop('disabled', true);
+                            $('#end_date').prop('disabled', true);
                         }
                     } else {
                         option +=
                             "<option value = '' selected disabled>ไม่พบห้องประชุม...</option>";
+                        $('#booking_date').prop('disabled', true);
+                        $('#booking_date').val('');
+                        $('#start_date').val('');
+                        $('#end_date').val('');
                         $('#start_date').prop('disabled', true);
                         $('#end_date').prop('disabled', true);
                     }
@@ -431,6 +447,15 @@
             })
         })
 
+        $('#name_room').on('change', function() {
+            $('#booking_date').prop('disabled', false);
+            $('#booking_date').val('');
+            $('#start_date').val('');
+            $('#end_date').val('');
+            $('#start_date').prop('disabled', true);
+            $('#end_date').prop('disabled', true);
+        })
+
         checkToday = (dateSelect) => {
             if (dateSelect == today) {
                 return true;
@@ -438,49 +463,55 @@
         }
 
         convertDateFormat = (datetime) => {
-
-            let oldDate = datetime.split(' ')[0];
-            let oldTime = datetime.split(' ')[1];
-
-            let newDateTime = oldDate.split('-')[2] + "-" + oldDate.split('-')[1] + "-" + oldDate.split(
-                '-')[0] + " " + oldTime;
-            // oldDate = oldDate.split('-')[2];
-            // oldDate = oldDate.split('-')[2];
+            let date = datetime.split(' ')[0];
+            let d = date.split('/')[0];
+            let m = date.split('/')[1];
+            let y = date.split('/')[2];
+            let newDateTime = y + "-" + m + "-" + d + " " + datetime.split(' ')[1];
 
             return newDateTime;
         }
         // เวลา เริ่ม - สิ้นสุด
-        $('[name = start_date]').on('change', function() {
+        $('[name = booking_date]').on('change', function() {
+            $('#start_date').prop('disabled', false);
+            $('[name = start_date]').val('');
+            $('#end_date').prop('disabled', true);
             $('[name = end_date]').val('');
         })
-        $('[name = end_date]').on('change', function() {
-
-            begin = convertDateFormat($('[name = start_date]').val());
-            end = convertDateFormat($('[name = end_date]').val());
-            console.log(begin + " to " + end);
-
-            room_id = $('#name_room').val();
-
-            if (checkToday(begin.split(' ')[0])) {
-                $.ajax({
-                    url: "search.php",
-                    method: "POST",
-                    data: {
-                        topic: 'getContact',
-                        room_id: room_id
-                    },
-                    success: function(data) {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'เนื่องจากเป็นการจองเร่งด่วน',
-                            html: 'กรุณาติดต่อ : "' + data[0].department +
-                                '"<br> เพื่ออนุมัติและจัดเตรียมห้อง' +
-                                "<br>" + "โทร : " + data[0].admin_phone
-                        })
-                    }
-                })
+        $('[name = start_date]').on('change', function() {
+            $('[name = end_date]').val('');
+            $('#end_date').prop('disabled', false);
+        })
+        $('#end_date').on('focusout', function() {
+            if (end != '') {
+                if (checkToday(begin.split(' ')[0])) {
+                    $.ajax({
+                        url: "search.php",
+                        method: "POST",
+                        data: {
+                            topic: 'getContact',
+                            room_id: room_id
+                        },
+                        success: function(data) {
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'เนื่องจากเป็นการจองเร่งด่วน',
+                                html: 'กรุณาติดต่อ : "' + data[0].department +
+                                    '"<br> เพื่ออนุมัติและจัดเตรียมห้อง' +
+                                    "<br>" + "โทร : " + data[0].admin_phone
+                            })
+                        }
+                    })
+                }
             }
-
+        })
+        $('[name = end_date]').on('change', function() {
+            begin = $('#booking_date').val() + " " + $('[name = start_date]').val();
+            end = $('#booking_date').val() + " " + $(this).val();
+            begin = convertDateFormat(begin);
+            end = convertDateFormat(end);
+            console.log(begin + " to " + end);
+            room_id = $('#name_room').val();
             if (begin != '' && end != '') {
                 $.ajax({
                     url: "search.php",
@@ -505,7 +536,8 @@
                             console.log(time_begin + " " + time_end);
                             msg =
                                 "<span class = 'error'>!! ไม่สามารถจองช่วงเวลาดังกล่าวได้...</span><br>";
-                            msg += "<span class = 'error'>มีผู้จองเวลา : " + time_begin +
+                            msg += "<span class = 'error'>มีผู้จองเวลา : " +
+                                time_begin +
                                 " น.-" +
                                 time_end +
                                 " น.</span>";
@@ -516,6 +548,8 @@
                     }
                 })
             }
+
+
         })
 
         // insert confirm submit

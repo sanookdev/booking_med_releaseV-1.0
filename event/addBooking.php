@@ -51,28 +51,28 @@
                                 id="datail_room_booking"></small>
                         </div>
                         <div class="mb-3 form-row">
+                            <div class="mb-3 col-md-12">
+                                <div class="form-control-wrapper">
+                                    <label for="booking_date">วันที่จอง</label><small class="text-error">*</small>
+                                    <input type="text" id="booking_date" name="booking_date"
+                                        class="form-control form-control-sm floating-label" placeholder="booking date"
+                                        disabled required>
+                                </div>
+                            </div>
                             <div class="mb-3 col-md-6">
-                                <!-- <label for="start_date">เริ่ม</label> <small class="text-error">*</small>
-                                <input type="datetime-local" class="form-control form-control-sm" name="start_date"
-                                    id="start_date" disabled required>
-                                <div class="err start_err"></div> -->
-
                                 <div class="form-control-wrapper">
                                     <label for="start_date">เริ่ม</label><small class="text-error">*</small>
                                     <input type="text" id="start_date" name="start_date"
-                                        class="form-control form-control-sm floating-label"
-                                        placeholder="Begin Date Time" disabled required>
+                                        class="form-control form-control-sm floating-label" placeholder="Begin Time"
+                                        disabled required>
                                     <div class="err start_err"></div>
                                 </div>
                             </div>
                             <div class=" mb-3 col-md-6">
-                                <!-- <label for="end_date">สิ้นสุด</label> <small class="text-error">*</small>
-                                <input type="datetime-local" class="form-control form-control-sm" name="end_date"
-                                    id="end_date" required> -->
                                 <div class="form-control-wrapper">
                                     <label for="end_date">สิ้นสุด</label><small class="text-error">*</small>
                                     <input type="text" id="end_date" name="end_date"
-                                        class="form-control form-control-sm floating-label" placeholder="End Date Time"
+                                        class="form-control form-control-sm floating-label" placeholder="End Time"
                                         disabled required>
                                 </div>
                             </div>
@@ -97,13 +97,28 @@
 
     <script type="text/javascript">
 $(document).ready(function() {
+    $('#booking_date').datetimepicker({
+        format: 'd/m/Y',
+        timepicker: false,
+        minDate: new Date(),
+        defaultDate: new Date()
+    });
+    $('#start_date').datetimepicker({
+        format: 'H:i:00',
+        datepicker: false
 
-    $('#start_date').bootstrapMaterialDatePicker({
-        format: 'DD-MM-YYYY HH:mm:00'
     });
-    $('#end_date').bootstrapMaterialDatePicker({
-        format: 'DD-MM-YYYY HH:mm:00'
+    $('#end_date').datetimepicker({
+        format: 'H:i:00',
+        datepicker: false
     });
+
+    // $('#start_date').bootstrapMaterialDatePicker({
+    //     format: 'DD-MM-YYYY HH:mm:00'
+    // });
+    // $('#end_date').bootstrapMaterialDatePicker({
+    //     format: 'DD-MM-YYYY HH:mm:00'
+    // });
 
     // $.material.init()
 });
