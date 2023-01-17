@@ -78,9 +78,9 @@ function getEventsAjax(room_id = '') {
 
 //gets the event details 
 function getEventDetails(events) {
-    // console.log(events);
+    console.log(events);
     events.forEach(event => {
-        addEvent(event.topic, event.begin, event.end, event.id, event.status, event.room_id)
+        addEvent(event.topic, event.begin, event.end, event.id, event.status, event.room_id, event.section_admin)
     });
 }
 
@@ -103,7 +103,7 @@ function changeTime(time) {
 
 
 
-function addEvent(title, begin, end, id, status, room_id) {
+function addEvent(title, begin, end, id, status, room_id, section_admin) {
     searchRoomByClassNo();
 
     date = begin.split(' ')[0];
@@ -143,6 +143,13 @@ function addEvent(title, begin, end, id, status, room_id) {
                     eventId = 'event' + id;
                     day = document.getElementById(dayId);
                     //create div for event
+                    let adminRoom = document.createElement("div");
+                    adminRoom.appendChild(document.createTextNode(section_admin));
+                    adminRoom.setAttribute('class', 'adminRoom');
+                    adminRoom.setAttribute('hidden', true);
+
+
+
                     let eventDiv = document.createElement("div");
                     eventDiv.setAttribute('id', eventId);
                     eventDiv.setAttribute('class', 'events');
@@ -168,6 +175,7 @@ function addEvent(title, begin, end, id, status, room_id) {
                     eventDiv.eventId = id;
                     eventDiv.date = date;
                     eventDiv.appendChild(eventTitle);
+                    eventDiv.appendChild(adminRoom);
                     eventDiv.appendChild(eventTime);
                     day.appendChild(eventDiv);
 
@@ -255,10 +263,12 @@ function changeRoomBooking(res_id = currentResId) {
 
 //Pops up when event div that is displayed in calendar view is clicked
 function eventPopUp(event) {
-
-
     // console.log(event.currentTarget.id)
     currentResId = event.currentTarget.id;
+    let sectionCodeAdmin = document.getElementById(currentResId).getElementsByClassName("adminRoom")[0];
+    sectionCodeAdmin = sectionCodeAdmin.textContent
+    let sectionSessionAdmin = currentSession['_LOGIN'].substr(1, 2);
+
     currentResId = currentResId.replace('event', '');
     // console.log(currentResId)
     let popUp = document.getElementById('eventPopUp');
@@ -286,9 +296,20 @@ function eventPopUp(event) {
     tmpId = tmpId[1];
     // 
 
-
-    if (currentSession.status_type == '1') {
-
+    let verify = false;
+    let roleArr = '';
+    if (typeof currentSession.role !== 'undefined') {
+        roleArr = currentSession.role;
+        roleArr.forEach(element => {
+            if (element.class_no == currentClass && element.write == '1' && sectionSessionAdmin == sectionCodeAdmin) {
+                verify = true;
+            }
+            if (verify) {
+                return;
+            }
+        });
+    }
+    if (currentSession.status_type == '1' || verify) {
         var row_confirmChangeRoom = document.createElement('div');
         row_confirmChangeRoom.setAttribute("class", "form-row");
 
@@ -344,7 +365,7 @@ function eventPopUp(event) {
     document.getElementById('eventTextArea').appendChild(heading);
     document.getElementById('eventTextArea').appendChild(details);
 
-    if (currentSession.status_type == '1') {
+    if (currentSession.status_type == '1' || verify) {
         document.getElementById('eventTextArea').appendChild(smallText);
         document.getElementById('eventTextArea').appendChild(row_confirmChangeRoom);
         document.getElementById('eventTextArea').appendChild(btnApproveStatus);
