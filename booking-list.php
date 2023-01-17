@@ -482,6 +482,14 @@
             $('[name = end_date]').val('');
             $('#end_date').prop('disabled', false);
         })
+        $('#start_date').on('focusout', function() {
+            let timeEndStart = $(this).val();
+            $('#end_date').datetimepicker({
+                format: 'H:i:00',
+                minTime: timeEndStart,
+                datepicker: false
+            });
+        })
         $('#end_date').on('focusout', function() {
             if (end != '') {
                 if (checkToday(begin.split(' ')[0])) {

@@ -108,10 +108,7 @@ $(document).ready(function() {
         datepicker: false
 
     });
-    $('#end_date').datetimepicker({
-        format: 'H:i:00',
-        datepicker: false
-    });
+
 
     // $('#start_date').bootstrapMaterialDatePicker({
     //     format: 'DD-MM-YYYY HH:mm:00'
