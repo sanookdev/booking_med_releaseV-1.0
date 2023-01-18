@@ -5,8 +5,11 @@
     include "function.php";
     $sql = "SELECT room.* , b.building_name FROM rooms AS room
                 LEFT JOIN building AS b
-                    ON room.building_id = b.id
-                        ORDER BY room.id ASC";
+                    ON room.building_id = b.id";
+    if($_SESSION['_LOGIN'] != "ADMIN"){
+        $sql .= " WHERE admin_section ='".$_SESSION['SECTION_ID']."'";
+    }
+    $sql .=" ORDER BY room.id ASC";
     $result = $conn->query($sql);
 ?>
 <!doctype html>
@@ -124,7 +127,7 @@
     <script>
     $(document).ready(function() {
 
-
+        var session = <?= json_encode($_SESSION);?>;
         // ************************** DATA TABLE *************************
         $('#data-table').DataTable({
             "bInfo": false,
@@ -286,7 +289,9 @@
             data[4] = checkbox
             data[5] = $('select[name=section]').val();
             data[6] = $('input[name=admin_phone]').val();
-            table = "rooms(building_id,class_no,name,detail,use_for,admin_section,admin_phone)";
+            data[7] = session._LOGIN;
+            table =
+                "rooms(building_id,class_no,name,detail,use_for,admin_section,admin_phone,userupdate)";
             $.ajax({
                 url: "insert.php",
                 method: "POST",

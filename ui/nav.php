@@ -36,15 +36,18 @@
                         รายการจองห้อง</a>
                 </li>
 
-                <?if(isset($_SESSION['_LOGIN']) && $_SESSION['_LOGIN'] == 'ADMIN'){?>
+                <?if((isset($_SESSION['_LOGIN']) && $_SESSION['_LOGIN'] == 'ADMIN') || 
+                (isset($_SESSION['role']) && count($_SESSION['role']) > 0)){?>
                 <!-- 
                 <li class="nav-item">
                     <a class="nav-link" href="user_manage.php"><i class="fa fa-user"></i> จัดการสมาชิก</a>
                 </li> -->
+                <?if(isset($_SESSION['_LOGIN']) && $_SESSION['_LOGIN'] == 'ADMIN') {?>
                 <li class="nav-item">
                     <a class="nav-link" href="permission_manage.php"><i class="fa fa-user"></i>
                         จัดการสิทธิ์</a>
                 </li>
+                <?}?>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

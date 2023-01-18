@@ -25,6 +25,7 @@ $checkDb = '0'; // 1 check in 192.168.66.1 ( menu_handle )  OR   2 check in 192.
       );
       $_SESSION['_LOGIN'] = $uname;
       $_SESSION['fullname'] = $returnInfo['fullname'];
+      $_SESSION['SECTION_ID'] = $returnInfo['SECTION_ID'];
       $sql = "SELECT status_type FROM users WHERE username = '$uname' LIMIT 1";
       $query = $conn->query($sql) or die($conn->error());
       if(mysqli_num_rows($query) > 0){

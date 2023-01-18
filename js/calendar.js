@@ -265,6 +265,8 @@ function changeRoomBooking(res_id = currentResId) {
 function eventPopUp(event) {
     // console.log(event.currentTarget.id)
     currentResId = event.currentTarget.id;
+
+    // this sectionCodeAdmin was department admin of room , sectionSessionAdmin was department of user  create for check TRUE or FALSE of admin
     let sectionCodeAdmin = document.getElementById(currentResId).getElementsByClassName("adminRoom")[0];
     sectionCodeAdmin = sectionCodeAdmin.textContent
     let sectionSessionAdmin = currentSession['_LOGIN'].substr(1, 2);
