@@ -222,7 +222,6 @@
         select.addEventListener('change', function() {
             var options = select.querySelectorAll('option');
             var selectedOption = options[select.selectedIndex];
-
             $('#datail_room_booking').html(selectedOption.title);
         });
 
@@ -320,7 +319,7 @@
 
         $('#for').on('change', function() {
             // console.log($('#building_name option:selected').text())
-
+            $('#datail_room_booking').html('');
             $('#building_name').html('');
             $('#class_no').html('');
             $('#class_no').prop('disabled', true);
@@ -358,6 +357,7 @@
         })
 
         $('#building_name').on('change', function() {
+            $('#datail_room_booking').html('');
             $('#name_room').html('');
             $('#name_room').prop('disabled', true);
             $('#booking_date').val('');
@@ -393,6 +393,7 @@
             })
         })
         $('#class_no').on('change', function() {
+            $('#datail_room_booking').html('');
             if ($(this).val() != '') {
                 $('#name_room').prop('disabled', false);
             } else {
@@ -417,10 +418,24 @@
                     detail_room_booking = '';
                     if (data.length > 0) {
                         for (i = 0; i < data.length; i++) {
-                            if (i == 0) {
-                                $('#datail_room_booking').html(data[i]['detail']);
+                            let noofroom = '';
+                            if (data[i]['numberofroom'] == '1') {
+                                noofroom = 'ไม่เกิน 10 คน';
+                            } else if (data[i]['numberofroom'] == '2') {
+                                noofroom = '11-30 คน';
+                            } else if (data[i]['numberofroom'] == '3') {
+                                noofroom = '31-50 คน';
+                            } else if (data[i]['numberofroom'] == '4') {
+                                noofroom = '51-100 คน';
+                            } else {
+                                noofroom = 'มากกว่า 100 คน';
                             }
-                            option += "<option title = '" + data[i]['detail'] +
+                            if (i == 0) {
+                                $('#datail_room_booking').html(data[i]['detail'] + " / " +
+                                    noofroom);
+                            }
+                            option += "<option title = '" + data[i]['detail'] + " / " +
+                                noofroom +
                                 "' value='" + data[i]['id'] + "'>";
                             option += data[i]['name'];
                             option += "</option>";
@@ -575,17 +590,6 @@
 
             // start to end time of reservation
             date = $('#date_reservation').val();
-            choice_time = $('#start_to_end_time').val();
-            if (choice_time == '1') {
-                begin = date + ' 08:30';
-                end = date + ' 12:00';
-            } else if (choice_time == '2') {
-                begin = date + ' 13:00';
-                end = date + ' 16:30';
-            } else if (choice_time == '3') {
-                begin = date + ' 08:30';
-                end = date + ' 16:30';
-            }
             data['start_date'] = begin;
             data['end_date'] = end;
             // start to end time of reservation (end)

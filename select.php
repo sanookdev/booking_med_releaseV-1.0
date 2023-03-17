@@ -40,7 +40,18 @@
                     $j++;
                 }
             }
-
+            $noofroom = '';
+            if($row['numberofroom'] == '1'){
+                $noofroom = 'ไม่เกิน 10 คน';
+            }else if($row['numberofroom'] == '2'){
+                $noofroom = '11-30 คน';
+            }else if($row['numberofroom'] == '3'){
+                $noofroom = '31-50 คน';
+            }else if($row['numberofroom'] == '4'){
+                $noofroom = '51-100 คน';
+            }else {
+                $noofroom = 'มากกว่า 100 คน';
+            }
             $output .= '  
                <tr>
                     <th>ID</th>
@@ -49,6 +60,10 @@
                 <tr>
                     <th>ชื่อห้องประชุม</th>
                     <td>' . $row['name'] . '</td>
+                </tr>
+                <tr>
+                <th>จำนวนที่รับได้</th>
+                    <td>' . $noofroom . '</td>
                 </tr>
                 <tr>
                     <th>ตึก</th>
@@ -110,7 +125,7 @@
     } else if ($_POST['topic'] == 'booking' || $_POST['topic'] == 'booking-list') {
         $id = $_POST['id'];
         $sql = "SELECT res.*,room.name ,room.building_id,room.detail, room.admin_phone, b.building_name ,room.class_no ,cat.topic AS use_for,
-                        sec.section_ID , sec.DESCRIPTION 
+                        sec.section_ID , sec.DESCRIPTION , room.numberofroom
                     FROM reservation AS res
                         JOIN rooms AS room ON res.room_id = room.id
                             JOIN building AS b ON room.building_id =  b.id
@@ -120,6 +135,18 @@
         $result = $conn->query($sql);
         $output .= '<table class="table table-bordered">';
         $row = $result->fetch_assoc();
+        $noofroom = '';
+            if($row['numberofroom'] == '1'){
+                $noofroom = 'ไม่เกิน 10 คน';
+            }else if($row['numberofroom'] == '2'){
+                $noofroom = '11-30 คน';
+            }else if($row['numberofroom'] == '3'){
+                $noofroom = '31-50 คน';
+            }else if($row['numberofroom'] == '4'){
+                $noofroom = '51-100 คน';
+            }else {
+                $noofroom = 'มากกว่า 100 คน';
+            }
             $explode_start = explode(' ',$row['begin']);
             $explode_end = explode(' ',$row['end']);
             $output .= '
@@ -149,7 +176,7 @@
                 </tr>
                 <tr>
                     <th>รายละเอียดห้อง</th>
-                    <td>' . $row['detail'] . '</td>
+                    <td>' . $row['detail'] . " ( " . $noofroom . ' )</td>
                 </tr>
                 <tr>
                     <th>หัวเรื่อง</th>

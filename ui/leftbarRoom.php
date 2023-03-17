@@ -9,14 +9,17 @@
             </h4>
         </div>
         <div class="list-group-item">
+            <?if(isset($_SESSION['_LOGIN']) && $_SESSION['_LOGIN'] == "ADMIN"){?>
             <button onclick="window.location.href='building-list.php'" class="btn btn-light btn-block border"
                 style="text-align:left!important;">ตึก</button>
             <button onclick="window.location.href='class-list.php'" class="btn btn-light btn-block border"
                 style="text-align:left!important;">ชั้น</button>
-            <button onclick="window.location.href='rooms-list.php'" class="btn btn-light btn-block border"
-                style="text-align:left!important;">ห้อง</button>
             <button onclick="window.location.href='use-list.php'" class="btn btn-light btn-block border"
                 style="text-align:left!important;">วัตถุประสงค์</button>
+            <?}?>
+            <button onclick="window.location.href='rooms-list.php'" class="btn btn-light btn-block border"
+                style="text-align:left!important;">ห้อง</button>
+
         </div>
     </div>
 </div>

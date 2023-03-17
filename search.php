@@ -27,15 +27,18 @@ else if ($getVal =='ชั้น'){
 else if ($getVal =='หาห้องประชุม'){
     $building_id = $_POST['building_id'];
     $class_no = $_POST['class_id'];
-    $sql = "SELECT r.`name`,r.id,r.detail ,r.admin_phone ,r.admin_section AS SECTION_CODE,sec.DESCRIPTION AS department
+    $sql = "SELECT r.`name`,r.id,r.detail ,r.admin_phone ,r.admin_section  AS SECTION_CODE,sec.DESCRIPTION AS department, r.`numberofroom`
                  FROM rooms AS r
                     JOIN appm_section AS sec ON sec.SECTION_CODE = r.admin_section
                         WHERE r.building_id = '$building_id' 
                             AND r.class_no = '$class_no'";
+
+    
     if(isset($_POST['use'])){
         $sql .= " AND use_for 
                         LIKE '%".$_POST['use']."%'";
     } 
+    $sql .= " ORDER BY r.`name` ASC";
                                             
     $rs = select($sql,$conn);
 }

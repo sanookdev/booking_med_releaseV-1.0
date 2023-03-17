@@ -48,20 +48,20 @@ if(isset($_SESSION)){session_destroy();}
 
                                 <!-- ERROR MESSAGE  -->
                                 <span class="err" id="err"></span>
+                                <form action="#" id="form_login">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="email"
+                                            id="email" placeholder="Enter Your Username ..">
+                                        <span class="email-err"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control form-control-user" name="password"
+                                            id="password" placeholder="Enter Your Password ..">
+                                        <span class="pass-err"></span>
 
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="email" id="email"
-                                        placeholder="Enter Your Username ..">
-                                    <span class="email-err"></span>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" name="password"
-                                        id="password" placeholder="Enter Your Password ..">
-                                    <span class="pass-err"></span>
-
-                                </div>
-                                <input type="button" class="btn btn-success btn-user btn-block" value="Login"
-                                    id="btn_submit">
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-user btn-block">Login</button>
+                                </form>
                             </div>
                         </div>
                     </center>
@@ -89,7 +89,8 @@ if(isset($_SESSION)){session_destroy();}
 
 
         // event after submit login
-        $("#btn_submit").on('click', function() {
+        $("#form_login").on('submit', function(e) {
+            e.preventDefault();
             var username = $("#email").val().trim();
             var password = $("#password").val().trim();
             if ($("#email").first().val() === "") {
@@ -110,6 +111,7 @@ if(isset($_SESSION)){session_destroy();}
                     },
                     success: function(res) {
                         var msg = '';
+                        console.log(res);
                         if (res != 0) {
                             window.location = "main.php";
                         } else {

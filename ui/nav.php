@@ -54,10 +54,12 @@
                         <i class="fa fa-gear"></i> ตั้งค่า
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <?if(isset($_SESSION['_LOGIN']) && $_SESSION['_LOGIN'] == 'ADMIN') {?>
                         <a class="dropdown-item" href="building-list.php"><i class="fa fa-edit"></i> ตึก </a>
                         <a class="dropdown-item" href="class-list.php"><i class="fa fa-edit"></i> ชั้น </a>
-                        <a class="dropdown-item" href="rooms-list.php"><i class="fa fa-edit"></i> ห้อง </a>
                         <a class="dropdown-item" href="use-list.php"><i class="fa fa-edit"></i> วัตถุประสงค์</a>
+                        <?}?>
+                        <a class="dropdown-item" href="rooms-list.php"><i class="fa fa-edit"></i> ห้อง </a>
                         <!-- <a class="dropdown-item" href="accessories-list.php"><i class="fa fa-edit"></i> อุปกรณ์</a> -->
                     </div>
                 </li>

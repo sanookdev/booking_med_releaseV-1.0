@@ -1,7 +1,8 @@
 <?
     session_start();
     date_default_timezone_set('Asia/Bangkok');
-    include 'function.php';
+    include './function.php';
+    include './config/userpassDb.php';
     
     if(isset($_GET['_LOGIN']) && isset($_GET['password'])){
     $uname =  strtoupper(trim($_GET['_LOGIN']));
@@ -27,7 +28,7 @@
     print_r($output);
     }else{
     $_SESSION['_LOGIN'] = 'ADMIN';
-    $conn = new mysqli('192.168.66.17', 'medtu' ,'tmt@medtu','techno_booking');mysqli_set_charset($conn,"utf8");
+    $conn = new mysqli($hostDb, $userDb ,$passDb,$nameDb);mysqli_set_charset($conn,"utf8");
     if($conn->connect_error) { alert("can't connect db"); } 
     $uname =  strtoupper(mysqli_real_escape_string($conn,$_POST['username']));
     $password = md5(mysqli_real_escape_string($conn,$_POST['password']));
@@ -52,7 +53,7 @@
     //   foreach($data as $key => $val) {
     //     $_SESSION[$key] = $val;
     //   }
-      $conn = new mysqli('192.168.66.17', 'medtu' ,'tmt@medtu','techno_booking');mysqli_set_charset($conn,"utf8");
+      $conn = new mysqli($hostDb, $userDb ,$passDb,$nameDb);mysqli_set_charset($conn,"utf8");
       if($conn->connect_error) { alert("can't connect db"); } 
       $sql = "INSERT INTO `log`(medcode,stats) VALUE('".$_SESSION['_LOGIN']."','1')";
       $conn->query($sql);
@@ -65,7 +66,6 @@
       session_destroy();
     }
 }else{
-    // header('location: http://203.131.209.236/serviceTechno/login.htm');
     header('location: ./login.php');
 }
 

@@ -1,4 +1,10 @@
-<? session_start(); ?>
+<? 
+    session_start();
+    if($_SESSION['_LOGIN'] != "ADMIN"){
+        header('location: ./main.php');
+    }
+ 
+?>
 
 <?
     include "config/connect.php";

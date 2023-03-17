@@ -1,4 +1,9 @@
-<? session_start(); ?>
+<? 
+    session_start(); 
+    if(!isset($_SESSION['role'])){
+        header('location: ./main.php');
+    }
+?>
 
 <?
     include "config/connect.php";
@@ -9,8 +14,9 @@
     if($_SESSION['_LOGIN'] != "ADMIN"){
         $sql .= " WHERE admin_section ='".$_SESSION['SECTION_ID']."'";
     }
-    $sql .=" ORDER BY room.id ASC";
+    $sql .=" ORDER BY room.name ASC";
     $result = $conn->query($sql);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -51,8 +57,10 @@
                             <th width="5%">#</th>
                             <th>ห้องประชุม / ตึก ( ชั้น )</th>
                             <th width="15%">รายละเอียด</th>
-                            <th width="15%">แก้ไข</th>
+                            <!-- <th width="15%">แก้ไข</th> -->
+                            <?if($_SESSION['_LOGIN'] == "ADMIN"){?>
                             <th width="7%">ลบ</th>
+                            <?}?>
                         </tr>
                     </thead>
                     <tbody class="bg-light">
@@ -69,16 +77,18 @@
                                     id="<?= $row['id']; ?>">
                                     <i class="fa fa-list" aria-hidden="true"></i> รายละเอียด</button>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <button type="button" name="edit" class="btn btn-sm btn-block btn-warning edit_data"
                                     id="<?= $row['id']; ?>">
                                     <i class="fa fa-edit" aria-hidden="true"></i> แก้ไข</button>
-                            </td>
+                            </td> -->
+                            <?if($_SESSION['_LOGIN'] == 'ADMIN'){?>
                             <td>
                                 <button type="button" name="delete" class="btn btn-sm btn-block btn-danger delete_data"
                                     id="<?= $row['id']; ?>">
                                     <i class="fa fa-remove" aria-hidden="true"></i></button>
                             </td>
+                            <?}?>
                         </tr>
                         <?
                         $i++;
@@ -290,8 +300,9 @@
             data[5] = $('select[name=section]').val();
             data[6] = $('input[name=admin_phone]').val();
             data[7] = session._LOGIN;
+            data[8] = $('select[name=numberofroom]').val();
             table =
-                "rooms(building_id,class_no,name,detail,use_for,admin_section,admin_phone,userupdate)";
+                "rooms(building_id,class_no,name,detail,use_for,admin_section,admin_phone,userupdate,numberofroom)";
             $.ajax({
                 url: "insert.php",
                 method: "POST",

@@ -38,7 +38,17 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="mb-3 col-12">
+                            <div class="mb-3 col-4">
+                                <label for=" numberofroom">จำนวนที่รับได้</label>
+                                <select name="numberofroom" id="numberofroom" class="form-control form-control-sm">
+                                    <option value="1">ไม่เกิน 10</option>
+                                    <option value="2">11-30</option>
+                                    <option value="3">31-50</option>
+                                    <option value="4">51-100</option>
+                                    <option value="5">มากกว่า 100</option>
+                                </select>
+                            </div>
+                            <div class="mb-3 col-8">
                                 <label for=" admin_phone">เบอร์ติดต่อผู้ดูแลห้อง</label>
                                 <input type="text" name="admin_phone" id="admin_phone"
                                     class='form-control form-control-sm' required />

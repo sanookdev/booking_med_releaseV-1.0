@@ -84,12 +84,20 @@
                             <textarea class="form-control form-control-sm" id="details_booking" rows='4'
                                 cols='50'></textarea>
                         </div>
+                        <div class="mb-3 text-center">
+                            <small class="text-danger" style="font-size:0.9rem">
+                                หมายเหตุ :
+                                หากต้องการขอใช้บริการบุคลากรด้านโสตทัศนูปกรณ์<br>ให้เข้าไปขอบริการงานเทคโนเพิ่มเติมหลังจากจองห้องที่
+                            </small>
+                            <a href="http://203.131.209.236/serviceTechno/login.htm" target="_blank">Click</a>
+                        </div>
                         <div class="mb-3">
                             <button type="submit"
                                 class="col-md-6 pull-right btn btn-sm btn-success btn-block btn_submit"
                                 disabled>บันทึก</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -101,7 +109,9 @@ $(document).ready(function() {
         format: 'd/m/Y',
         timepicker: false,
         minDate: new Date(),
-        defaultDate: new Date()
+        defaultDate: new Date(),
+        scrollMonth: false,
+        scrollInput: false
     });
     $('#start_date').datetimepicker({
         format: 'H:i:00',

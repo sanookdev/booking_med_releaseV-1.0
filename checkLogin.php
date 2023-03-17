@@ -21,7 +21,8 @@ $checkDb = '0'; // 1 check in 192.168.66.1 ( menu_handle )  OR   2 check in 192.
     unset($data['chkData']);
     if ($returnInfo['chkData'] == md5($password)) {
       $output = array(
-        'success'  =>  true
+        'success'  =>  true,
+        'status' => '1'
       );
       $_SESSION['_LOGIN'] = $uname;
       $_SESSION['fullname'] = $returnInfo['fullname'];
@@ -34,7 +35,8 @@ $checkDb = '0'; // 1 check in 192.168.66.1 ( menu_handle )  OR   2 check in 192.
       }
     } else {
       $output = array(
-        'error'    =>  'รหัสผ่านไม่ถูกต้อง'
+        'error'    =>  'รหัสผ่านไม่ถูกต้อง',
+        'status' => '0'
       );
     }
   }else{
@@ -58,7 +60,7 @@ $checkDb = '0'; // 1 check in 192.168.66.1 ( menu_handle )  OR   2 check in 192.
       );
     }
   }
-if(isset($data)){
+if(isset($output) && $output['status']){
   
   foreach($data as $key => $val) {
     if($key != 'password')
